@@ -8,6 +8,17 @@ export default {
 
   state: { count: 1 },
 
+  subscriptions: {
+    setup({ dispatch, history }) {  // eslint-disable-line
+      console.log('[subscriptions]~~dispatch~~', dispatch);
+      console.log('[subscriptions]~~history~~', history);
+      window.onresize = () => {
+        dispatch({type: 'add', payload: 2});
+      }
+    },
+  },
+
+
   effects: {
     *asyncAdd({ payload }, { put, call, push }) {  // eslint-disable-line
       // const { counter } = yield select(_ => _);

@@ -3,7 +3,6 @@ import propTypes from 'prop-types';
 import { withRouter, Link, routerRedux } from 'dva/router';
 
 const Counter = ({ counter, dispatch, history }, context) => {
-  console.log(context);
   const handleClick = () => {
     dispatch({type: 'counter/add', payload: 3})
   }
