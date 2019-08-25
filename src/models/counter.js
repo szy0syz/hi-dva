@@ -7,7 +7,10 @@ export default {
   state: { count: 1 },
 
   effects: {
-    *asyncAdd({ payload }, { put, call }) {  // eslint-disable-line
+    *asyncAdd({ payload }, { put, call, select }) {  // eslint-disable-line
+      // const { counter } = yield select(_ => _);
+      const counter = yield select(state => state.counter);
+      console.log(counter);
       yield call(delay, 1000);
       yield put({ type: 'add', payload });
     },
