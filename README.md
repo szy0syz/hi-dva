@@ -106,3 +106,74 @@ effects: {
   }
 },
 ```
+
+## dva middleware
+
+```js
+const logger = store => next => action => {
+  console.log('dispatching ', action);
+  const result = next(action);
+  console.log('next state ', store.getState());
+  return result;
+}
+
+const error = store => next => action => {
+  try {
+    console.log('error: null');
+    next(action);
+  } catch (error) {
+    console.info('[dva middleware: error]');
+    console.error(error);
+  }
+}
+```
+
+## extraReducers
+
+> 全局添加reducer
+
+```js
+const extraReducers {
+  //  form = namespace
+  form(state = false, action) {
+    switch (action.type) {
+      case 'SHOW':
+        return true;
+      case 'HIDE'
+        return false;
+      default:
+        return state;
+    }
+  }
+}
+
+const app = dva({
+  history: createHistory(),
+  onAction: [ logger, error ],
+  extraReducers
+});
+```
+
+## onEffect
+
+```js
+const onEffect = (effect, { put }, model, key) => {
+  return function*(...args) {
+    // model = 具体哪个model
+    console.log('*********onEffect, model', model);
+    // key = 具体的action名
+    console.log('*********onEffect, key', key);
+
+    yield put({ type: 'SHOW' });
+    yield effect(...args);
+    yield put({ type: 'HIDE' });
+  }
+}
+
+const app = dva({
+  history: createHistory(),
+  onAction: [ logger, error ],
+  extraReducers,
+  onEffect,
+});
+```
