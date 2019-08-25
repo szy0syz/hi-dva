@@ -30,3 +30,20 @@ export default context
 // [index.js]
 require('./models').default.forEach(key => app.model(key.default));
 ```
+
+## model中effects和reducers重名问题
+
+> 不要在effects和reducers里定义重复名称的函数，会重复执行，因为dva分不清该执行哪个。
+
+## 路由
+
+```js
+// 1.
+import { withRouter } from 'dva/router';
+
+// 2.
+export default withRouter(Counter);
+
+// 3.
+<button onClick={() => history.push('/')}> go to home </button>
+```

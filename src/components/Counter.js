@@ -1,7 +1,8 @@
 import React from 'react';
 import propTypes from 'prop-types';
+import { withRouter } from 'dva/router';
 
-const Counter = ({ counter, dispatch }) => {
+const Counter = ({ counter, dispatch, history }) => {
   const handleClick = () => {
 
     dispatch({type: 'counter/add', payload: 3})
@@ -18,6 +19,7 @@ const Counter = ({ counter, dispatch }) => {
       <h2>{ counter.count }</h2>
       <button onClick={handleClick}> + </button>
       <button onClick={handleClickAsync}> async + </button>
+      <button onClick={() => history.push('/')}> go to home </button>
     </div>
   );
 };
@@ -28,4 +30,4 @@ Counter.propTypes = {
 
 
 
-export default Counter;
+export default withRouter(Counter);
