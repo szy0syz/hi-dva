@@ -35,7 +35,7 @@ require('./models').default.forEach(key => app.model(key.default));
 
 > 不要在effects和reducers里定义重复名称的函数，会重复执行，因为dva分不清该执行哪个。
 
-## 路由
+## 路由1
 
 ```js
 // 1.
@@ -46,4 +46,47 @@ export default withRouter(Counter);
 
 // 3.
 <button onClick={() => history.push('/')}> go to home </button>
+```
+
+## 路由2
+
+```js
+import { Link } from 'dva/router';
+
+<Link to='/'>home page</Link>
+```
+
+## 路由3
+
+```js
+const Counter = ({ counter, dispatch, history }, context) => {
+  // context.router.history.push('/')
+}
+
+// 必须定义
+Counter.contextTypes = {
+  router: propTypes.object,
+};
+```
+
+## 路由4
+
+```js
+import { routerRedux } from 'dva/router';
+
+<button onClick={() => dispatch(routerRedux.push('/'))}> [routerRedux]go to home </button>
+```
+
+## 路由5：在model中跳转路由
+
+```js
+import { routerRedux } from 'dva/router';
+// 这里put相当于dispatch
+yield put(routerRedux.push('/'));
+
+// 如果路由带参数 可以这样做
+yield put(routerRedux.push({
+  pathname: '/',
+  search: queryString.stringify({ name: 'jerry', age: 18 }),
+}));
 ```

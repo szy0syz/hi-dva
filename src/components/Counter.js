@@ -1,10 +1,10 @@
 import React from 'react';
 import propTypes from 'prop-types';
-import { withRouter } from 'dva/router';
+import { withRouter, Link, routerRedux } from 'dva/router';
 
-const Counter = ({ counter, dispatch, history }) => {
+const Counter = ({ counter, dispatch, history }, context) => {
+  console.log(context);
   const handleClick = () => {
-
     dispatch({type: 'counter/add', payload: 3})
   }
 
@@ -20,12 +20,19 @@ const Counter = ({ counter, dispatch, history }) => {
       <button onClick={handleClick}> + </button>
       <button onClick={handleClickAsync}> async + </button>
       <button onClick={() => history.push('/')}> go to home </button>
+      <button onClick={() => context.router.history.push('/')}> [context]go to home </button>
+      <button onClick={() => dispatch(routerRedux.push('/'))}> [routerRedux]go to home </button>
+      <Link to='/'>home page</Link>
     </div>
   );
 };
 
 Counter.propTypes = {
   counter: propTypes.object,
+};
+
+Counter.contextTypes = {
+  router: propTypes.object,
 };
 
 
