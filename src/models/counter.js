@@ -10,9 +10,7 @@ export default {
 
   subscriptions: {
     setup({ dispatch, history }) {  // eslint-disable-line
-      console.log('[subscriptions]~~dispatch~~', dispatch);
-      console.log('[subscriptions]~~history~~', history);
-      window.onresize = () => {
+        window.onresize = () => {
         dispatch({type: 'add', payload: 2});
       }
     },

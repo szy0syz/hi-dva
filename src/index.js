@@ -1,4 +1,5 @@
 import dva from 'dva';
+import createLoading from 'dva-loading';
 // import { createBrowserHistory as createHistory } from 'history';
 
 import './index.css';
@@ -8,6 +9,7 @@ const app = dva();
 
 // 2. Plugins
 // app.use({});
+app.use(createLoading());
 
 // 3. Model
 require('./models').default.forEach(key => app.model(key.default));

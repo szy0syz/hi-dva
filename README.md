@@ -91,4 +91,18 @@ yield put(routerRedux.push({
 }));
 ```
 
-## subscriptions 订阅
+## fetch
+
+```js
+effects: {
+  *fetch(_, { put, call }) {  // eslint-disable-line
+    yield put({ type: 'fetch/start' });
+    try {
+      const response = yield call(axios.get, 'https://jsonplaceholder.typicode.com/users');
+      yield put({ type: 'fetch/success', payload: { users: response.data } });
+    } catch (error) {
+      yield put({ type: 'fetch/error', payload: { error: error.message } });
+    }
+  }
+},
+```
